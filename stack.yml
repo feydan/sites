@@ -37,10 +37,11 @@ services:
     volumes:
       - ./web/nginx/danfey.conf:/etc/nginx/conf.d/danfey.conf:ro
       - ./web/danfey:/var/www/html
+    env_file:
+      - .env
     environment:
       - VIRTUAL_HOST=danfey.com
       - LETSENCRYPT_HOST=danfey.com
-      - LETSENCRYPT_EMAIL=${EMAIL}
 
   danfey-wordpress:
     image: wordpress:php7.2-fpm-alpine
@@ -55,10 +56,11 @@ services:
     volumes:
        - ./web/nginx/entogronomy.conf:/etc/nginx/conf.d/entogronomy.conf:ro
        - ./web/entogronomy:/var/www/html
+    env_file:
+      - .env
     environment:
       - VIRTUAL_HOST=entogronomy.com
       - LETSENCRYPT_HOST=entogronomy.com
-      - LETSENCRYPT_EMAIL=${EMAIL}
 
   entogronomy-php:
     image: php:7.2-fpm-alpine
@@ -71,10 +73,11 @@ services:
     volumes:
       - ./web/nginx/wedding.conf:/etc/nginx/conf.d/wedding.conf:ro
       - ./web/wedding:/var/www/html
+    env_file:
+      - .env
     environment:
       - VIRTUAL_HOST=hannaanddan.wedding
       - LETSENCRYPT_HOST=hannaanddan.wedding
-      - LETSENCRYPT_EMAIL=${EMAIL}
 
 volumes:
   nginx-vhost:
