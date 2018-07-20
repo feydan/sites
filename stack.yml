@@ -10,6 +10,8 @@ services:
       - nginx-html:/usr/share/nginx/html
       - ./web/nginx/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -32,8 +34,6 @@ services:
     volumes:
       - ./web/nginx/danfey.conf:/etc/nginx/conf.d/danfey.conf:ro
       - ./web/danfey:/var/www/html
-    labels:
-      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     environment:
       - VIRTUAL_HOST=danfey.com
 
