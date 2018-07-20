@@ -16,7 +16,7 @@ services:
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     depends_on:
-      - nginx_proxy
+      - nginx-proxy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./web/nginx/certs:/etc/nginx/certs:rw
@@ -38,6 +38,8 @@ services:
       - ./web/danfey:/var/www/html
     environment:
       - VIRTUAL_HOST=danfey.com
+      - LETSENCRYPT_HOST=danfey.com
+      - LETSENCRYPT_EMAIL=${EMAIL}
 
   danfey-wordpress:
     image: wordpress:php7.2-fpm-alpine
@@ -54,6 +56,8 @@ services:
        - ./web/entogronomy:/var/www/html
     environment:
       - VIRTUAL_HOST=entogronomy.com
+      - LETSENCRYPT_HOST=entogronomy.com
+      - LETSENCRYPT_EMAIL=${EMAIL}
 
   entogronomy-php:
     image: php:7.2-fpm-alpine
@@ -68,6 +72,8 @@ services:
       - ./web/wedding:/var/www/html
     environment:
       - VIRTUAL_HOST=hannaanddan.wedding
+      - LETSENCRYPT_HOST=hannaanddan.wedding
+      - LETSENCRYPT_EMAIL=${EMAIL}
 
 volumes:
   nginx-vhost:
