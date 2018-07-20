@@ -1,0 +1,55 @@
+version: '3.1'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+
+  danfey-nginx:
+    image: nginx:stable-alpine
+    volumes:
+       - ./web/nginx/danfey.conf:/etc/nginx/conf.d/danfey.conf:ro
+       - ./web/danfey:/var/www/html
+    environment:
+      - VIRTUAL_HOST=danfey.com
+
+  danfey-wordpress:
+    image: wordpress:php7.2-fpm-alpine
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./web/danfey:/var/www/html
+
+  entogronomy-nginx:
+    image: nginx:stable-alpine
+    volumes:
+       - ./web/nginx/entogronomy.conf:/etc/nginx/conf.d/entogronomy.conf:ro
+       - ./web/entogronomy:/var/www/html
+    environment:
+      - VIRTUAL_HOST=entogronomy.com
+
+  entogronomy-php:
+    image: php:7.2-fpm-alpine
+    restart: always
+    volumes:
+      - ./web/entogronomy:/var/www/html
+
+  wedding-nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./web/nginx/wedding.conf:/etc/nginx/conf.d/wedding.conf:ro
+      - ./web/wedding:/var/www/html
+    environment:
+      - VIRTUAL_HOST=hannaanddan.wedding
