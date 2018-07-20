@@ -6,7 +6,13 @@ services:
     ports:
       - 80:80
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - sock:/tmp/docker.sock:ro
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - sock:/var/run/docker.sock:ro
+      - ./web/nginx/certs:/etc/nginx/certs:rw
 
   mysql:
     image: mysql:5.7
@@ -28,12 +34,6 @@ services:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     environment:
       - VIRTUAL_HOST=danfey.com
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./web/nginx/certs:/etc/nginx/certs:rw
 
   danfey-wordpress:
     image: wordpress:php7.2-fpm-alpine
@@ -64,3 +64,6 @@ services:
       - ./web/wedding:/var/www/html
     environment:
       - VIRTUAL_HOST=hannaanddan.wedding
+
+volumes:
+  sock:
