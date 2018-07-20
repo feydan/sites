@@ -6,13 +6,18 @@ services:
     ports:
       - 80:80
     volumes:
-      - sock:/tmp/docker.sock:ro
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
+      - ./web/nginx/certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
     volumes:
-      - sock:/var/run/docker.sock:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./web/nginx/certs:/etc/nginx/certs:rw
+      - nginx-vhost:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
 
   mysql:
     image: mysql:5.7
@@ -25,9 +30,6 @@ services:
   danfey-nginx:
     image: nginx:stable-alpine
     volumes:
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - ./web/nginx/certs:/etc/nginx/certs:ro
       - ./web/nginx/danfey.conf:/etc/nginx/conf.d/danfey.conf:ro
       - ./web/danfey:/var/www/html
     labels:
@@ -66,4 +68,5 @@ services:
       - VIRTUAL_HOST=hannaanddan.wedding
 
 volumes:
-  sock:
+  nginx-vhost:
+  nginx-html:
