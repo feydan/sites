@@ -10,10 +10,10 @@ help:
         @echo "  logs                Follow log output"
 
 docker-start: init
-        docker-compose up -d
+        docker-compose -f stack.yml up -d
 
 docker-stop:
-        @docker-compose down -v
+        @docker-compose -f stack.yml down -v
 
 logs:
-        @docker-compose logs -f
+        @docker-compose -f stack.yml logs -f
