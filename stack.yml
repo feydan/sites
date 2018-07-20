@@ -34,8 +34,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./web/nginx/certs:/etc/nginx/certs:rw
-    volumes-from:
-      - nginx-proxy
 
   danfey-wordpress:
     image: wordpress:php7.2-fpm-alpine
