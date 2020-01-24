@@ -68,17 +68,6 @@ services:
     volumes:
       - ./web/entogronomy:/var/www/html
 
-  wedding-nginx:
-    image: nginx:stable-alpine
-    volumes:
-      - ./web/nginx/wedding.conf:/etc/nginx/conf.d/wedding.conf:ro
-      - ./web/wedding:/var/www/html
-    env_file:
-      - .env
-    environment:
-      - VIRTUAL_HOST=hannaanddan.wedding
-      - LETSENCRYPT_HOST=hannaanddan.wedding
-
 volumes:
   nginx-vhost:
   nginx-html:
