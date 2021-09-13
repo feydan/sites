@@ -23,6 +23,7 @@ services:
       - certs:/etc/nginx/certs
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
 
   mysql:
     image: mysql:5.7
@@ -69,6 +70,7 @@ services:
       - ./web/entogronomy:/var/www/html
 
 volumes:
+  acme:
   certs:
   vhost:
   html:
