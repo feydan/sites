@@ -41,8 +41,8 @@ services:
     env_file:
       - .env
     environment:
-      - VIRTUAL_HOST=danfey.com
-      - LETSENCRYPT_HOST=danfey.com
+      - VIRTUAL_HOST=danfey.com,fey.dev
+      - LETSENCRYPT_HOST=danfey.com,fey.dev
 
   danfey-wordpress:
     image: wordpress:php7.2-fpm-alpine
