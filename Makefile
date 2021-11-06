@@ -14,4 +14,4 @@ docker-stop:
 	@docker-compose -f stack.yml down -v
 
 logs:
-	@docker-compose -f stack.yml logs -f
+	@docker-compose -f stack.yml logs --tail 100 -f
