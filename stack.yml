@@ -3,6 +3,7 @@ version: '3.1'
 services:
   nginx-proxy:
     image: jwilder/nginx-proxy:alpine
+    restart: always
     ports:
       - 80:80
       - 443:443
@@ -16,6 +17,7 @@ services:
 
   letsencrypt:
     image: nginxproxy/acme-companion
+    restart: always
     depends_on:
       - nginx-proxy
     volumes:
@@ -35,6 +37,7 @@ services:
 
   danfey-nginx:
     image: nginx:stable-alpine
+    restart: always
     volumes:
       - ./web/nginx/danfey.conf:/etc/nginx/conf.d/danfey.conf:ro
       - ./web/danfey:/var/www/html
@@ -54,6 +57,7 @@ services:
 
   entogronomy-nginx:
     image: nginx:stable-alpine
+    restart: always
     volumes:
       - ./web/nginx/entogronomy.conf:/etc/nginx/conf.d/entogronomy.conf:ro
       - ./web/entogronomy:/var/www/html
@@ -68,6 +72,14 @@ services:
     restart: always
     volumes:
       - ./web/entogronomy:/var/www/html
+
+  satisfactory-start:
+    build: ./web/satisfactory-start
+    restart: always
+    expose:
+      - "80"
+    env_file:
+      - ./web/satisfactory-start/.env
 
 volumes:
   acme:
